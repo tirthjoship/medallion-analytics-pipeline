@@ -1,0 +1,10 @@
+reports/
+data/bronze/
+data/silver/
+data/gold/
+*.parquet
+*.csv
+.ipynb_checkpoints/
+__pycache__/
+.venv/
+.env
