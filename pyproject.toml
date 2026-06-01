@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "medallion-analytics-pipeline"
+version = "0.1.0"
+description = "Bronze-Silver-Gold analytics pipeline on NYC TLC taxi data with Power BI dashboard"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "polars>=1.0.0",
+    "duckdb>=1.0.0",
+    "pyarrow>=15.0.0",
+    "pytest>=8.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest-cov>=5.0.0",
+    "black>=26.0.0",
+    "isort>=8.0.0",
+    "mypy>=2.0.0",
+    "ruff>=0.15.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-v"
+
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+exclude = ["notebooks/", "sql/"]
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_decorators = false
+
+[[tool.mypy.overrides]]
+module = ["polars.*", "duckdb.*", "pyarrow.*"]
+ignore_missing_imports = true
