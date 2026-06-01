@@ -13,9 +13,16 @@ Read **`CONTEXT.md`** first — locked decisions, TLC dataset, medallion layers,
 ## Commands (after scaffold exists)
 
 ```bash
+make setup         # pip install -e ".[dev]" + pre-commit install
+make test          # data quality pytest (no coverage)
+make test-cov      # pytest with --cov=pipeline --cov-fail-under=90
+make lint          # pre-commit run --all-files
+make typecheck     # mypy pipeline/ --strict
+make check         # lint + typecheck + test-cov (full gate)
 make pipeline      # bronze → silver → gold
-make test          # data quality pytest
 ```
+
+> **Note:** `make test-cov`, `make typecheck`, and `make pipeline` require the `pipeline/` directory (created in Phase 1).
 
 ## Rules
 

@@ -1,11 +1,17 @@
 # Data — too large for git
-data/bronze/
-data/silver/
-data/gold/
-!data/**/.gitkeep
+data/bronze/**
+!data/bronze/.gitkeep
+data/silver/**
+!data/silver/.gitkeep
+data/gold/**
+!data/gold/.gitkeep
+
+# Parquet safety net (data dirs handle specific exclusions)
+*.parquet
+!tests/fixtures/*.parquet
 
 # Reports (commit .md and .json, not raw outputs)
-reports/*.html
+reports/**/*.html
 
 # Python
 __pycache__/

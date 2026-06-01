@@ -32,6 +32,6 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: |
-          pip install mypy polars duckdb pyarrow
+          pip install -e ".[dev]"
       - name: Run mypy
         run: mypy pipeline/ --strict

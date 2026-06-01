@@ -179,7 +179,10 @@ medallion-analytics-pipeline/
 │   └── dashboard/             # PDF/png exports for GitHub
 ├── notebooks/00_eda_gate.ipynb
 ├── reports/eda_gate.md
-├── data/bronze|.gitkeep
+├── data/
+│   ├── bronze/.gitkeep
+│   ├── silver/.gitkeep
+│   └── gold/.gitkeep
 ├── .github/workflows/refresh.yml
 ├── Makefile
 ├── pyproject.toml
