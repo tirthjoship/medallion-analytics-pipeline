@@ -1,9 +1,9 @@
 # Medallion Analytics Pipeline
 
-**Status:** Phase 0 — EDA gate (scaffold + 1-month bronze data onboarded)  
+**Status:** Phase 0, EDA gate (scaffold + 1-month bronze data onboarded)  
 **Portfolio:** Project 5 of 5 · Balanced DA/DS strategy
 
-A **production-style medallion pipeline** that turns messy raw taxi trip data into **trusted Gold KPIs** and an **executive Power BI dashboard** — with data quality gates, lineage documentation, and BRD-style metric definitions.
+A **production-style medallion pipeline** that turns messy raw taxi trip data into **trusted Gold KPIs** and an **executive Power BI dashboard**, with data quality gates, lineage documentation, and BRD-style metric definitions.
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
 [![Phase](https://img.shields.io/badge/phase-0%20EDA%20gate-orange)](./reports/)
@@ -19,7 +19,7 @@ Raw operational extracts land as Parquet or CSV dumps. Executives need dashboard
 
 > *Can you own Bronze → Silver → Gold, write the SQL, document KPIs, enforce quality rules, and deliver a dashboard with lineage?*
 
-This project is **pipeline-first, ML-optional**. The goal is trusted analytics infrastructure — not forcing predictive modeling onto weak signal (lesson from the DataCo supply chain sibling repo).
+This project is **pipeline-first, ML-optional**. The goal is trusted analytics infrastructure, not forcing predictive modeling onto weak signal (lesson from the DataCo supply chain sibling repo).
 
 ---
 
@@ -29,9 +29,9 @@ This project is **pipeline-first, ML-optional**. The goal is trusted analytics i
 |--------|----------------------|
 | **Vancouver (primary)** | DA/BI roles explicitly ask for Databricks/Delta Gold + Power BI + complex SQL |
 | **Seattle enterprise** | Pipeline ownership, data quality, executive storytelling |
-| **Your cert stack** | Ties to **PL-900** (Power BI) and **AZ-900** (Azure mapping doc — no separate Azure-only repo) |
+| **Your cert stack** | Ties to **PL-900** (Power BI) and **AZ-900** (Azure mapping doc, no separate Azure-only repo) |
 
-**Databricks note:** Deep Databricks work lives in the **UBC Seaspan capstone**. This repo is a **local-first TLC pipeline** with an optional Databricks mirror later — not a second capstone.
+**Databricks note:** Deep Databricks work lives in the **UBC Seaspan capstone**. This repo is a **local-first TLC pipeline** with an optional Databricks mirror later, not a second capstone.
 
 **Complements:** ML-heavy repos (supply chain, stock, healthcare) and product experimentation (SQL + stats).
 
@@ -45,14 +45,14 @@ This project is **pipeline-first, ML-optional**. The goal is trusted analytics i
 | **Silver** | Cleansed, typed, deduped trips | Documented drop rules in `docs/DATA_QUALITY_RULES.md` |
 | **Gold** | Star schema SQL views | `fact_trips` + `dim_date`, `dim_vendor`, `dim_zone`, `dim_payment` |
 | **Quality** | pytest data tests on fixtures | `tests/test_data_quality.py` |
-| **KPIs** | BRD-style definitions | `docs/KPI_DEFINITIONS.md` — no drift vs Power BI DAX |
+| **KPIs** | BRD-style definitions | `docs/KPI_DEFINITIONS.md`, no drift vs Power BI DAX |
 | **Lineage** | Mermaid diagram + refresh story | `docs/lineage.md` |
 | **BI** | Power BI `.pbix` + PDF export | `powerbi/` + `docs/dashboard/` screenshots |
 | **Orchestration** | GitHub Actions on sample/subset | `.github/workflows/refresh.yml` |
 
 ---
 
-## Dataset — NYC TLC Yellow Taxi
+## Dataset: NYC TLC Yellow Taxi
 
 **Source:** [NYC TLC Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page)  
 **Dictionary:** [Yellow trip data dictionary (PDF)](https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf)
@@ -68,8 +68,8 @@ This project is **pipeline-first, ML-optional**. The goal is trusted analytics i
 
 | Criterion | TLC |
 |-----------|-----|
-| **Volume** | Millions of rows/month — credible scale |
-| **Messiness** | Nulls, bad fares, invalid timestamps — real pipeline work |
+| **Volume** | Millions of rows/month, credible scale |
+| **Messiness** | Nulls, bad fares, invalid timestamps, real pipeline work |
 | **Modeling** | Natural star schema: trips fact + date + zone + vendor |
 | **KPI clarity** | Trips/day, revenue, avg fare, peak hour, payment mix |
 | **Access** | Public, free, no API keys |
@@ -92,16 +92,16 @@ This project is **pipeline-first, ML-optional**. The goal is trusted analytics i
 
 ```mermaid
 flowchart TB
-    subgraph Bronze["Bronze — immutable raw"]
+    subgraph Bronze["Bronze - immutable raw"]
         RAW[Parquet downloads\nyellow_tripdata_YYYY-MM.parquet]
         MAN[bronze_manifest.json\nrow_count, checksum, ingest_ts]
     end
 
-    subgraph Silver["Silver — cleansed"]
+    subgraph Silver["Silver - cleansed"]
         CLN[Parse datetimes\nDrop invalid trips\nCap extreme fares\nType standardization]
     end
 
-    subgraph Gold["Gold — analytics-ready"]
+    subgraph Gold["Gold - analytics-ready"]
         FACT[fact_trips]
         DIMS[dim_date · dim_vendor\n dim_zone · dim_payment]
         KPI[gold_kpi_daily\n gold_kpi_hourly\n gold_kpi_vendor]
@@ -140,7 +140,7 @@ flowchart TB
 
 ---
 
-## Planned Gold KPIs (draft — lock after EDA)
+## Planned Gold KPIs (draft, lock after EDA)
 
 | KPI | Draft definition |
 |-----|------------------|
@@ -182,11 +182,11 @@ medallion-analytics-pipeline/
 
 **Transform engine:** Polars or DuckDB (pick one during EDA; Polars preferred for large Parquet ingest).
 
-**Optional ML (only if pipeline done early):** Isolation Forest on daily trip-count anomalies — one notebook max; does not block v1.
+**Optional ML (only if pipeline done early):** Isolation Forest on daily trip-count anomalies, one notebook max; does not block v1.
 
 ---
 
-## Phase 0 — current focus (START HERE)
+## Phase 0: current focus (START HERE)
 
 Pipeline code does not start until the EDA gate passes.
 
@@ -201,9 +201,9 @@ Pipeline code does not start until the EDA gate passes.
 
 - Load Jan 2026 Parquet; row count and memory estimate for 3 months
 - Null % on `total_amount`, `trip_distance`, `passenger_count`
-- Outlier distributions — propose fare/distance caps
+- Outlier distributions, propose fare/distance caps
 - Invalid datetime rows (pickup after dropoff)
-- Daily trip volume time series — sanity check
+- Daily trip volume time series, sanity check
 - Draft star schema Mermaid in `docs/lineage.md`
 
 **Pass criteria:** ≥500k rows (1 month) or ≥1M (3 months) · <10% row loss in Silver with documented rules · KPI list passes review.
@@ -213,7 +213,7 @@ Full checklist: [`../PORTFOLIO_EDA_SPRINT.md`](../PORTFOLIO_EDA_SPRINT.md)
 ### Download (if data missing)
 
 ```text
-# From NYC TLC site — Parquet preferred
+# From NYC TLC site, Parquet preferred
 data/bronze/yellow/yellow_tripdata_2026-01.parquet   # ✅ on disk
 data/bronze/yellow/yellow_tripdata_2026-02.parquet   # optional
 data/bronze/yellow/yellow_tripdata_2026-03.parquet   # optional
@@ -225,10 +225,10 @@ data/bronze/yellow/yellow_tripdata_2026-03.parquet   # optional
 
 | Repo | Focus |
 |------|-------|
-| `risk-prediction` | ML classification + SHAP — not lakehouse layers |
-| `product-experimentation` | A/B testing + metric SQL — not medallion cleansing |
-| `healthcare-noshow-predictor` | Regulated ML ops — not executive BI |
-| `research-instrument` | Falsification + time series — not batch ETL |
+| `risk-prediction` | ML classification + SHAP; not lakehouse layers |
+| `product-experimentation` | A/B testing + metric SQL; not medallion cleansing |
+| `healthcare-noshow-predictor` | Regulated ML ops; not executive BI |
+| `research-instrument` | Falsification + time series; not batch ETL |
 
 ---
 
@@ -236,10 +236,10 @@ data/bronze/yellow/yellow_tripdata_2026-03.parquet   # optional
 
 | Tool | Role in this repo |
 |------|-------------------|
-| **Local pipeline** | Primary — must run without cloud |
+| **Local pipeline** | Primary, must run without cloud |
 | **Power BI** | P0 deliverable (PL-900 alignment) |
 | **GitHub Actions** | Orchestration narrative (no Airflow repo) |
-| **Databricks Delta** | Optional mirror after local E2E — Seaspan is primary |
+| **Databricks Delta** | Optional mirror after local E2E; Seaspan is primary |
 | **AWS S3** | Optional bronze backup + dashboard PDF archive |
 | **Snowflake / Airflow** | Explicitly skipped |
 
@@ -249,10 +249,10 @@ Details: [`../PORTFOLIO_TOOLS_PLAYBOOK.md`](../PORTFOLIO_TOOLS_PLAYBOOK.md)
 
 ## Developer entry points
 
-1. [`CONTEXT.md`](./CONTEXT.md) — mission, layer specs, session playbook
-2. [`../PORTFOLIO_EDA_SPRINT.md`](../PORTFOLIO_EDA_SPRINT.md) — EDA checklist
-3. [`CLAUDE.md`](./CLAUDE.md) — rules and commands
-4. [`docs/FUTURE_ENHANCEMENTS.md`](./docs/FUTURE_ENHANCEMENTS.md) — E2E checklist
+1. [`CONTEXT.md`](./CONTEXT.md): mission, layer specs, session playbook
+2. [`../PORTFOLIO_EDA_SPRINT.md`](../PORTFOLIO_EDA_SPRINT.md): EDA checklist
+3. [`CLAUDE.md`](./CLAUDE.md): rules and commands
+4. [`docs/FUTURE_ENHANCEMENTS.md`](./docs/FUTURE_ENHANCEMENTS.md): E2E checklist
 
 ### Quick setup (when implementation starts)
 
@@ -266,7 +266,7 @@ make test
 
 ---
 
-## Resume bullet (fill after v1 — no invented numbers)
+## Resume bullet (fill after v1, no invented numbers)
 
 > Built medallion pipeline (Bronze/Silver/Gold) on N NYC taxi trips with automated quality tests; authored KPI definitions and Power BI executive dashboard with documented lineage.
 
@@ -274,7 +274,7 @@ make test
 
 ## Author
 
-**Tirth Joshi** — UBC Master of Data Science · Former analytics (VGH, BCCNM, Walmart Canada) · PL-900, AZ-900
+**Tirth Joshi**, UBC Master of Data Science · Former analytics (VGH, BCCNM, Walmart Canada) · PL-900, AZ-900
 
 Do **not** claim TLC pipeline work as employer project.
 
