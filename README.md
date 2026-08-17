@@ -31,7 +31,7 @@ This project is **pipeline-first, ML-optional**. The goal is trusted analytics i
 | **Seattle enterprise** | Pipeline ownership, data quality, executive storytelling |
 | **Your cert stack** | Ties to **PL-900** (Power BI) and **AZ-900** (Azure mapping doc — no separate Azure-only repo) |
 
-**Databricks note:** Deep Databricks work lives in the **UBC Sesapan capstone**. This repo is a **local-first TLC pipeline** with an optional Databricks mirror later — not a second capstone.
+**Databricks note:** Deep Databricks work lives in the **UBC Seaspan capstone**. This repo is a **local-first TLC pipeline** with an optional Databricks mirror later — not a second capstone.
 
 **Complements:** ML-heavy repos (supply chain, stock, healthcare) and product experimentation (SQL + stats).
 
@@ -225,10 +225,10 @@ data/bronze/yellow/yellow_tripdata_2026-03.parquet   # optional
 
 | Repo | Focus |
 |------|-------|
-| `supply-chain-optimization-ml` | ML classification + SHAP — not lakehouse layers |
-| `product-experimentation-analytics` | A/B testing + metric SQL — not medallion cleansing |
+| `risk-prediction` | ML classification + SHAP — not lakehouse layers |
+| `product-experimentation` | A/B testing + metric SQL — not medallion cleansing |
 | `healthcare-noshow-predictor` | Regulated ML ops — not executive BI |
-| `multi-modal-stock-recommender` | Falsification + time series — not batch ETL |
+| `research-instrument` | Falsification + time series — not batch ETL |
 
 ---
 
@@ -239,7 +239,7 @@ data/bronze/yellow/yellow_tripdata_2026-03.parquet   # optional
 | **Local pipeline** | Primary — must run without cloud |
 | **Power BI** | P0 deliverable (PL-900 alignment) |
 | **GitHub Actions** | Orchestration narrative (no Airflow repo) |
-| **Databricks Delta** | Optional mirror after local E2E — Sesapan is primary |
+| **Databricks Delta** | Optional mirror after local E2E — Seaspan is primary |
 | **AWS S3** | Optional bronze backup + dashboard PDF archive |
 | **Snowflake / Airflow** | Explicitly skipped |
 
